@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jaya Rasa — Katalog Produk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Katalog produk Jaya Rasa — tampilan modern, animasi halus, responsif." />
+  <style>
+    :root{
+      --yellow: #f6c500; /* aksen cerah */
+      --brown: #5A3E36;  /* warna primer hangat */
+      --cream: #FFF9F2;  /* latar putih kekuningan */
+      --white: #ffffff;
+      --muted: #8b7f7a;
+      --glass: rgba(255,255,255,0.6);
+      --card-shadow: 0 8px 20px rgba(90,62,54,0.12);
+      --radius: 14px;
+      --max-width: 1200px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,var(--cream) 0%, #fff 100%);
+      color:var(--brown);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+      padding:48px 20px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--max-width);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:28px;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:14px;
+    }
+
+    .logo{
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--yellow),#F3A800);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(246,196,0,0.18);font-weight:800;color:var(--brown);font-size:20px
+    }
+
+    h1{font-size:20px;margin:0}
+    .tag{color:var(--muted);font-size:13px}
+
+    .controls{display:flex;gap:12px;align-items:center}
+
+    .search{
+      position:relative;display:flex;align-items:center;background:var(--white);padding:10px 12px;border-radius:999px;box-shadow:var(--card-shadow);width:320px;transition:transform .25s ease
+    }
+    .search:focus-within{transform:translateY(-3px)}
+    .search input{border:0;outline:0;font-size:14px;width:100%;background:transparent}
+
+    .btn{
+      border:0;cursor:pointer;padding:10px 14px;border-radius:12px;font-weight:600;background:var(--yellow);color:var(--brown);box-shadow:0 8px 20px rgba(246,196,0,0.18);transition:transform .12s ease, box-shadow .12s ease
+    }
+    .btn.secondary{background:transparent;border:1px solid rgba(90,62,54,0.08);color:var(--brown)}
+    .btn:active{transform:translateY(1px)}
+
+    /* hero */
+    .hero{
+      display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,var(--white), rgba(246,196,0,0.05));padding:20px;border-radius:16px;margin-bottom:20px;box-shadow:var(--card-shadow)
+    }
+    .hero-left{max-width:60%}
+    .hero h2{margin:0 0 8px 0;font-size:22px}
+    .hero p{margin:0;color:var(--muted)}
+
+    /* grid */
+    .toolbar{display:flex;gap:12px;align-items:center;margin:18px 0}
+    .chips{display:flex;gap:8px}
+    .chip{padding:8px 12px;background:transparent;border-radius:999px;border:1px solid rgba(90,62,54,0.06);cursor:pointer;font-weight:600}
+    .chip.active{background:var(--yellow);border-color:transparent}
+
+    .grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;
+    }
+
+    .card{
+      background:var(--white);border-radius:var(--radius);padding:14px;box-shadow:var(--card-shadow);overflow:hidden;position:relative;transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease;border:1px solid rgba(90,62,54,0.03)
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(90,62,54,0.14)}
+
+    .thumb{height:160px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(246,196,0,0.08), rgba(90,62,54,0.02));margin-bottom:12px}
+    .thumb img{max-width:100%;max-height:100%;object-fit:cover;display:block}
+
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .title{font-weight:700;color:var(--brown);font-size:15px}
+    .price{font-weight:800;color:var(--yellow)}
+
+    .desc{font-size:13px;color:var(--muted);margin:8px 0}
+
+    .card-footer{display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+    /* subtle entry animation */
+    .grid .card{opacity:0;transform:translateY(12px) scale(.995);animation:pop .6s ease forwards}
+    .grid .card:nth-child(1){animation-delay:.06s}
+    .grid .card:nth-child(2){animation-delay:.11s}
+    .grid .card:nth-child(3){animation-delay:.16s}
+    @keyframes pop{to{opacity:1;transform:none}}
+
+    /* floating quick actions */
+    .pill{
+      position:fixed;right:26px;bottom:26px;background:linear-gradient(180deg,var(--yellow),#F3A800);color:var(--brown);padding:12px 14px;border-radius:999px;box-shadow:0 18px 40px rgba(246,196,0,0.2);display:flex;gap:10px;align-items:center;font-weight:700;cursor:pointer
+    }
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(10,10,10,0.45);display:none;align-items:center;justify-content:center;padding:24px;z-index:100}
+    .modal{background:var(--white);max-width:900px;width:100%;border-radius:18px;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px;position:relative}
+    .modal .thumb{height:320px;border-radius:12px}
+    .close{position:absolute;right:18px;top:18px;border-radius:10px;background:transparent;border:0;padding:6px;cursor:pointer}
+
+    footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+
+    @media (max-width:880px){
+      .hero{flex-direction:column;align-items:flex-start}
+      .hero-left{max-width:100%}
+      .modal{grid-template-columns:1fr}
+      body{padding:20px}
+      .search{width:100%}
+      header{flex-direction:column;align-items:flex-start}
+      .controls{width:100%}
+    }
+    @media (max-width:500px){
+        .controls{flex-direction:column;align-items:stretch}
+        .search{width:100%}
+        .toolbar{flex-direction:column;align-items:flex-start}
+        .chips{flex-wrap:wrap}
+    }
+  </style>
+</head>
+      
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">JR</div>
+        <div>
+          <h1>Jaya Rasa</h1>
+          <div class="tag">Katalog Produk — rasa & kualitas terjamin</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="search" role="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden style="opacity:.7;margin-right:8px"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <input id="q" placeholder="Cari produk, rasa, atau kategori..." aria-label="Cari produk">
+        </div>
+        <button class="btn" id="addSample">Tambah Sample</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-left">
+        <h2>Temukan produk unggulan Jaya Rasa</h2>
+        <p>Telusuri katalog kami: bahan terbaik, rasa autentik, dikemas rapi untuk konsumen modern.</p>
+      </div>
+      <div>
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='100'><rect rx='12' width='180' height='100' fill='%23F6C400'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='22' font-family='Inter' fill='%235A3E36'>Jaya Rasa</text></svg>" alt="Jaya Rasa" style="width:140px;height:auto;filter:drop-shadow(0 6px 14px rgba(90,62,54,0.08))">
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <div class="chips" id="categories">
+        <button class="chip active" data-cat="all">Semua</button>
+        <button class="chip" data-cat="kue">Kue Tradisional</button>
+        <button class="chip" data-cat="snack">Snack & Kerupuk</button>
+        <button class="chip" data-cat="minuman">Sirup & Minuman</button>
+      </div>
+      <div style="margin-left:auto;color:var(--muted)">Menampilkan <span id="count">0</span> produk</div>
+    </div>
+
+    <main>
+      <section class="grid" id="grid">
+        </section>
+    </main>
+
+    <footer>© <span id="year"></span> JAYA RASA KHAS BENGKULU</footer>
+  </div>
+
+  <div class="pill" id="contact">
+    Hubungi Kami
+  </div>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Detail produk">
+      <button class="close" id="closeModal" aria-label="Tutup">✕</button>
+      <div>
+        <div class="thumb" id="modalImg"></div>
+      </div>
+      <div>
+        <h3 id="modalTitle"></h3>
+        <div style="display:flex;align-items:center;gap:12px;margin:8px 0"><div class="price" id="modalPrice"></div><div class="tag" id="modalCat"></div></div>
+        <p id="modalDesc" class="desc"></p>
+        <div style="margin-top:18px;display:flex;gap:8px">
+          <button class="btn" id="buyNow">Beli Sekarang</button>
+          <button class="btn secondary" id="addCart">Tambah Keranjang</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // sampel data produk telah diganti dengan produk-produk tradisional
+    const products = [
+      {id:1,title:'Kue Bay Tat',price:45000,cat:'kue',desc:'Kue tradisional Bengkulu dengan rasa nanas yang manis legit dan tekstur padat',img:'whatsApp image 2025-12-01 at 17.47.25.jpeg'}, // Gambar kue
+      {id:2,title:'anak Tat',price:32000,cat:'kue',desc:'Inovasi anak tat dengan cita rasa manis khas kue tradisional Bay Tat',img:'tat.jpeg'}, // Gambar kue
+      {id:3,title:'Kerupuk Tuiri',price:18000,cat:'snack',desc:'Kerupuk renyah yang terbuat dari ikan, cocok untuk cemilan atau lauk',img:'bakpia tat.jpeg'}, // Gambar kerupuk
+      {id:4,title:'Lempuk Durian',price:65000,cat:'kue',desc:'Dodol durian asli dengan aroma yang kuat dan manis alami',img:'whatsApp image 2025-12-01 at 17.47.22.jpeg'}, // Gambar pisang
+      {id:5,title:'Sale Pisang',price:25000,cat:'snack',desc:'Irisan pisang tipis yang dikeringkan dan diolah, manis dan legit',img:'whatsApp image 2025-12-01 at 17.47.23.jpeg'}, // Gambar dodol/lempuk
+      {id:6,title:'Sirup Jeruk Kalamansi',price:38000,cat:'minuman',desc:'Sirup segar dari perasan jeruk Kalamansi (limau kasturi), kaya vitamin C',img:'whatsApp image 2025-12-01 at 17.47.24.jpeg'}, // Gambar sirup kalamansi
+  ]
+    // util format
+    const ID = s => document.getElementById(s);
+    const grid = ID('grid');
+    const q = ID('q');
+    const year = ID('year');
+    const count = ID('count');
+    const modal = ID('modal');
+    const modalImg = ID('modalImg');
+    const modalTitle = ID('modalTitle');
+    const modalPrice = ID('modalPrice');
+    const modalDesc = ID('modalDesc');
+    const modalCat = ID('modalCat');
+
+    year.textContent = new Date().getFullYear();
+
+    // render products
+    function render(list){
+      grid.innerHTML='';
+      list.forEach(p=>{
+        const card = document.createElement('article');
+        card.className='card';
+        card.innerHTML = `
+          <div class="thumb"><img src="${p.img}" alt="${escapeHtml(p.title)}" loading="lazy"></div>
+          <div class="meta">
+            <div class="title">${escapeHtml(p.title)}</div>
+            <div class="price">Rp ${numberWithCommas(p.price)}</div>
+          </div>
+          <div class="desc">${escapeHtml(p.desc)}</div>
+          <div class="card-footer">
+            <div class="tag">${capitalize(p.cat)}</div>
+            <div style="display:flex;gap:8px">
+              <button class="btn" data-id="${p.id}" aria-label="Lihat ${escapeHtml(p.title)}">Lihat</button>
+              <button class="btn secondary" data-add="${p.id}" aria-label="Tambah ${escapeHtml(p.title)} ke Keranjang">+ Keranjang</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      count.textContent = list.length;
+    }
+
+    // initial render
+    render(products);
+
+    // search & filter
+    q.addEventListener('input', ()=>{ applyFilters(); });
+
+    document.querySelectorAll('.chip').forEach(ch=>{
+      ch.addEventListener('click', ()=>{
+        document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+        ch.classList.add('active');
+        applyFilters();
+      })
+    });
+
+    function applyFilters(){
+      const term = q.value.trim().toLowerCase();
+      const active = document.querySelector('.chip.active').dataset.cat;
+      const filtered = products.filter(p=>{
+        const matchCat = active==='all' ? true : p.cat===active;
+        const matchText = [p.title,p.desc,p.cat].join(' ').toLowerCase().includes(term);
+        return matchCat && matchText;
+      });
+      render(filtered);
+    }
+
+    // event delegation for card buttons
+    grid.addEventListener('click', e=>{
+      const btn = e.target.closest('button');
+      if(!btn) return;
+      const id = btn.dataset.id || btn.dataset.add;
+      if(btn.dataset.id){ openModal(id); }
+      if(btn.dataset.add){ addToCart(id); }
+    });
+
+    // modal
+    function openModal(id){
+      const p = products.find(x=>x.id==id); if(!p) return;
+      modalImg.innerHTML = `<img src="${p.img}" alt="${escapeHtml(p.title)}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;
+      modalTitle.textContent = p.title;
+      modalPrice.textContent = 'Rp '+numberWithCommas(p.price);
+      modalDesc.textContent = p.desc;
+      // Perbaikan: menampilkan nama kategori dengan lebih rapi di modal
+      let catDisplay = p.cat;
+      if (p.cat === 'kue') catDisplay = 'Kue Tradisional';
+      else if (p.cat === 'snack') catDisplay = 'Snack & Kerupuk';
+      else if (p.cat === 'minuman') catDisplay = 'Sirup & Minuman';
+      modalCat.textContent = catDisplay;
+      
+      modal.style.display = 'flex';
+    }
+    ID('closeModal').addEventListener('click', ()=> modal.style.display='none');
+    modal.addEventListener('click', e=>{ if(e.target===modal) modal.style.display='none' });
+
+    // simple cart action
+    function addToCart(id){
+      const p = products.find(x=>x.id==id); if(!p) return;
+      // tiny floating feedback animation
+      const fly = document.createElement('div');
+      fly.textContent = `✓ ${p.title} ditambahkan`;
+      fly.style.position='fixed';
+      fly.style.right='40px';
+      fly.style.bottom='100px';
+      fly.style.background='var(--brown)';
+      fly.style.color='white';
+      fly.style.padding='10px 14px';
+      fly.style.borderRadius='12px';
+      fly.style.boxShadow='0 10px 30px rgba(90,62,54,0.18)';
+      fly.style.opacity='0';
+      fly.style.transform='translateY(20px)';
+      fly.style.zIndex='101';
+      document.body.appendChild(fly);
+      // Animasi masuk
+      requestAnimationFrame(()=>{ fly.style.transition='all .45s cubic-bezier(.2,.9,.2,1)'; fly.style.opacity='1'; fly.style.transform='translateY(0)'; });
+      // Animasi keluar setelah 1.2 detik
+      setTimeout(()=>{ fly.style.opacity='0'; fly.style.transform='translateY(-20px)'; setTimeout(()=>fly.remove(),450) },1200);
+    }
+
+    // add sample product (demo)
+    ID('addSample').addEventListener('click', ()=>{
+      const newId = products.length ? Math.max(...products.map(p=>p.id))+1 : 1;
+      const categories = ['kue', 'snack', 'minuman'];
+      const randomCat = categories[Math.floor(Math.random()*categories.length)];
+      const sample = {id:newId,title:`Produk Baru Uji Coba ${newId}`,price:10000,cat:randomCat,desc:'Contoh produk baru untuk demo',img:products[0].img};
+      products.unshift(sample);
+      applyFilters();
+    });
+
+    // utility functions
+    function numberWithCommas(x){ return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+    function capitalize(s){ 
+      if (s === 'kue') return 'Kue Tradisional';
+      if (s === 'snack') return 'Snack & Kerupuk';
+      if (s === 'minuman') return 'Sirup & Minuman';
+      return s.charAt(0).toUpperCase()+s.slice(1); 
+    }
+    function escapeHtml(unsafe){ return unsafe.replace(/[&<"'`=\/]/g, function(s) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;",'/':'&#x2F;','=':'&#x3D;','`':'&#x60;'})[s]; }); }
+
+    // accessibility: keyboard shortcuts
+    document.addEventListener('keydown', e=>{
+      if(e.key==='/' && document.activeElement!==q){ e.preventDefault(); q.focus(); }
+      if(e.key==='Escape' && modal.style.display==='flex'){ modal.style.display='none' }
+    })
+    // contact pill behaviour: DIUBAH menjadi link WhatsApp
+ID('contact').addEventListener('click', ()=>{ 
+  // Nomor WA: 083171197620
+  const phoneNumber = '6283171197620'; // Format internasional: 62 diikuti nomor tanpa 0
+  const message = 'Halo Rigel Maizen, saya tertarik dengan produk dari Jaya Rasa (Kue Bay Tat, Bakpia Tat, dll.)';
+  
+  // Mengarahkan langsung ke WhatsApp Web/App
+  window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+});
+
+  </script>
+</body>
+</html>
